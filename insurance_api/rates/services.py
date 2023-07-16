@@ -13,7 +13,7 @@ async def calculate_cost(declared_cost: float, rate: Rate) -> float:
     return calculated_cost
 
 
-async def post_rate(rate: RateIn_Pydantic) -> Rate:
+async def upload_rate(rate: RateIn_Pydantic) -> Rate:
     # new_rate = await Rate.create(**rate.dict())
     new_rate = await Rate.create(actual_rate=rate.actual_rate, cargo_type=rate.cargo_type, date=rate.date)
     return new_rate

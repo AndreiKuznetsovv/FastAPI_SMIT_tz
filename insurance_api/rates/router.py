@@ -9,7 +9,7 @@ from .schemas import (
 from .services import (
     get_rate,
     calculate_cost,
-    post_rate
+    upload_rate
 )
 
 rate_router = APIRouter()
@@ -25,5 +25,5 @@ async def get_cost(cargo_type: Annotated[str, Header()],
 
 @rate_router.post('/rate')
 async def post_rate(rate: RateIn_Pydantic):
-    new_rate = post_rate(rate=rate)
+    new_rate = await upload_rate(rate=rate)
     return await Rate_Pydantic.from_tortoise_orm(new_rate)
