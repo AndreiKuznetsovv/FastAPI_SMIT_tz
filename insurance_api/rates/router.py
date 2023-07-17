@@ -3,13 +3,11 @@ from typing import Annotated
 from fastapi import APIRouter, Header
 
 from .schemas import (
-    Rate_Pydantic,
-    RateIn_Pydantic,
-)
+    RatesList, )
 from .services import (
     get_rate,
     calculate_cost,
-    upload_rate
+    upload_rates
 )
 
 rate_router = APIRouter()
@@ -24,6 +22,7 @@ async def get_cost(cargo_type: Annotated[str, Header()],
 
 
 @rate_router.post('/rate')
-async def post_rate(rate: RateIn_Pydantic):
-    new_rate = await upload_rate(rate=rate)
-    return await Rate_Pydantic.from_tortoise_orm(new_rate)
+async def post_rate(list_of_rates: RatesList):
+    uploaded_rates = await upload_rates(list_of_rates=list_of_rates)
+    return {f'{uploaded_rates[0].date.date}':
+                [{'cargo_type': rate.cargo_type.cargo_type, 'rate': rate.actual_rate} for rate in uploaded_rates]}

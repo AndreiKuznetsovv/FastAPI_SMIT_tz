@@ -1,6 +1,17 @@
-from tortoise.contrib.pydantic import pydantic_model_creator
+from datetime import date
+from typing import List
 
-from .models import Rate
+from pydantic import BaseModel
 
-Rate_Pydantic = pydantic_model_creator(Rate, name="Rate_Pydantic")
-RateIn_Pydantic = pydantic_model_creator(Rate, name="RateIn_Pydantic", exclude_readonly=True)
+
+class RateInfo(BaseModel):
+    cargo_type: str
+    actual_rate: float
+
+
+class RatesList(BaseModel):
+    date: date
+    rates_list: List[RateInfo]
+
+# Rate_Pydantic = pydantic_model_creator(Rate, name="Rate_Pydantic")
+# RateIn_Pydantic = pydantic_model_creator(Rate, name="RateIn_Pydantic", exclude_readonly=True)
