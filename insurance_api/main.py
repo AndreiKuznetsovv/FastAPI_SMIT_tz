@@ -11,6 +11,6 @@ register_tortoise(
     app,
     db_url=Config.TORTOISE_DATABASE_URI,
     modules={"models": ["rates.models"]},
-    generate_schemas=True,
+    generate_schemas=False,
     add_exception_handlers=True,
 )

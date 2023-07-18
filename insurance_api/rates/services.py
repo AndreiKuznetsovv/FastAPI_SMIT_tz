@@ -5,10 +5,22 @@ from .models import Rate, CargoType, DateUploaded
 from .schemas import RatesList
 
 
-async def get_rate(cargo_type: str, date_posted: str) -> Rate:
+async def get_rate(cargo_type: str, date_uploaded: str) -> Rate:
     rate = await Rate.filter(
-        cargo_type=cargo_type, date=date_posted).first()
+        cargo_type=await get_cargo_type_id(cargo_type=cargo_type),
+        date=await get_date_id(date_uploaded=date_uploaded)
+    ).first()
     return rate
+
+
+async def get_cargo_type_id(cargo_type: str) -> int:
+    cargo_type_instance = await CargoType.filter(cargo_type=cargo_type).first()
+    return cargo_type_instance.id
+
+
+async def get_date_id(date_uploaded: str) -> int:
+    date_uploaded_instance = await DateUploaded.filter(date=date_uploaded).first()
+    return date_uploaded_instance.id
 
 
 async def calculate_cost(declared_cost: float, rate: Rate) -> float:

@@ -1,0 +1,23 @@
+services:
+        app:
+                container_name: smit_tz_compose
+                build:
+                        context: .
+                env_file:
+                        - .env-docker
+                ports:
+                        - "8080:5000"
+                depends_on:
+                        - db
+        db:
+                container_name: postgres_compose
+                image: postgres:latest
+                restart: always
+                env_file:
+                        - .env-docker
+                ports:
+                        - "5433:5433"
+
+#                command: -p 5432
+                expose:
+                        - 5433

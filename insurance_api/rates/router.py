@@ -2,8 +2,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Header
 
-from .schemas import (
-    RatesList, )
+from .schemas import RatesList
 from .services import (
     get_rate,
     calculate_cost,
@@ -15,8 +14,8 @@ rate_router = APIRouter()
 
 @rate_router.get('/rate')
 async def get_cost(cargo_type: Annotated[str, Header()],
-                   declared_cost: Annotated[float, Header()], date_posted: Annotated[str, Header()]):
-    rate = await get_rate(cargo_type=cargo_type, date_posted=date_posted)
+                   declared_cost: Annotated[float, Header()], date_uploaded: Annotated[str, Header()]):
+    rate = await get_rate(cargo_type=cargo_type, date_uploaded=date_uploaded)
     cost = await calculate_cost(declared_cost=declared_cost, rate=rate)
     return {'calculated_cost': cost}
 

@@ -5,7 +5,7 @@ from tortoise.models import Model
 
 class DateUploaded(Model):
     """
-    Model rate's date
+    Model for rate's date
     """
 
     id = fields.IntField(pk=True)
